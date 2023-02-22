@@ -92,10 +92,10 @@
     <section class="section">
       <div class="container">
         <div class="row mb-4 align-items-center">
-          <div class="col-md-6" data-aos="fade-up">
-            <h2>Custom Graphics Engine.</h2>
-            <p class="mb-4"><span class="text-muted">Graphics, OpenGL, C++</span></p>
-            <p>Custom Graphics Engine using OpenGL. (Work in progress)</p>
+          <div class="col-md-6">
+            <h2>MAMEngine</h2>
+            <p class="mb-4"><span class="text-muted">Graphics, C++, OpenGL</span></p>
+            <p>A custom videogames engine built in C++ from scratch using OpenGL.</p>
           </div>
         </div>
       </div>
@@ -103,32 +103,31 @@
       <div class="site-section pb-0">
         <div class="container">
           <div class="row align-items-stretch">
-            <div class="col-md-7" data-aos="fade-up">
-              <img src="../assets/img/minotaur.gif">
-              <!-- <iframe width="560" height="300"
-              src="https://www.youtube.com/embed/8bAvbA1r16U">
-              </iframe> -->
+            <div class="col-md-7">
+              <img src="../assets/img/mamengine_1.gif" width="746" height="420">
             </div>
-            <div class="col-md-5 ml-auto" data-aos="fade-up" data-aos-delay="100">
+            <div class="col-md-5 ml-auto">
               <div class="sticky-content">
                 <div class="mb-5">
-                  <p>This project is currently in development. It is an AI simulation
-                    where multiple agents must perform different tasks in a procedurally
-                    generated hexagonal world. Multiple AI techniques have been used to
-                    generate the world and bring to life the AI agents.
+                  <p> MAMEngine is a custom Videogames Engine developed in C++ that uses OpenGL as its
+                    graphics library. It is an engine built from scratch where all the design and development
+                    is done by 
+                    <a href="https://www.linkedin.com/in/carmen-martin-moreno" target="_blank">Carmen Martín Moreno</a> and myself.
+                    <br><br>
+                    <b>It is a project currently in development</b>, so this page will be modified periodically with the new updates.
                   </p>
                 </div>
 
                 <h4 class="h4 mb-3">What I did</h4>
                 <ul class="list-unstyled list-line mb-5">
-                  <li>The player's combat system: melee attack, bullet spray, normal and heavy attacks.</li>
-                  <li>DashComponent for the player.</li>
-                  <li>A platform that destroys itself when the player steps on it.</li>
-                  <li>Bullet pool subsystem used by all the Actors in the game that shoot bullets.</li>
-                  <li>A HealthComponent used by all the Characters to manage their health.</li>
-                  <li>Damageable and Knockbackable interfaces used by all the Characters when damaged or knockbacked.</li>
-                  <li>HUD class and Widgets for the PauseMenu and for the HUD display.</li>
-                  <li>Gameloop (player death, level restart, level end...) and checkpoint system.</li>
+                  <li>Implementation of classes (such as Shader, Program, Texture) to abstract the use of OpenGL.</li>
+                  <li>Design and implementation of the Entity-Component-System architecture.</li>
+                  <li>Design and implementation of the draw loop of the engine.</li>
+                  <li>Design and implementation of the Input system.</li>
+                  <li>Design and implementation of the MAMEngine's editor, a graphic interface using DearImGui to use the Engine effortlessly.</li>
+                  <li>Implementation of the components: Transform, Renderer and Light.</li>
+                  <li>Implementation of the lit and unlit materials.</li>
+                  <li>Implementation of the lighting system and shaders.</li>
                 </ul>
               </div>
             </div>
@@ -137,19 +136,99 @@
 
         <div class="container">
           <div class="row mb-4 align-items-center">
-            <div class="col-md-8" data-aos="fade-up">
+            <div class="col-md-8">
               <h2>Features</h2>
               <ul class="list-unstyled list-line mb-5">
-              <li>Two distinct characters each with their own unique abilities.</li>
-              <li>Online multiplayer with lobby.</li>
-              <li>Full animations and sound.</li>
-              <li>Full core game loop with win/lose state and main and pause menu.</li>
-              <li>Interactable objects such as pickups, levers, doors and pressure plates.</li>
-              <li>Enemies with complex AI behaviour that is able to see and hear you.</li>
+              <li>Graphic core for the Engine that abstracts the use of the basic openGL objects.</li>
+              <li>Entity-Component-System architecture used to create objects in game.</li>
+              <li>Lighting system using the Phong model with forward rendering.</li>
+              <li>Graphic interface using DearImGui to facilitate the use of the Engine.</li>
+              <li>Dependencies with libraries to load images, load meshes, play audio, implement unitary tests.</li>
               </ul>
+
+              <h2>Features in development</h2>
+              <ul class="list-unstyled list-line mb-5">
+              <li>Implement deferred rendering.</li>
+              <li>Implement PBR materials.</li>
+              <li>Implement an abstraction of the audio library.</li>
+              <li>Enhance the graphic editor by adding: entity and component destruction, guizmos, ability to select entities and modify their transform with guizmos.</li>
+              </ul>
+
+              <!--
+              <h2>How I did it</h2>
+              <h4>Lighting system</h4>
+              <p>I designed the lighting system as a manager object that would manage all the lights of the scene.
+                I created three light classes (directional light, spot light and point light) that can be placed in the scene and added to the scene hierarchy. These classes can only be instantiated by the LightManager to ensure that every light is tracked by the manager.
+                <br><br>
+                When rendering, the lights are passed to the LitMaterial object and their information is uploaded to the GPU when using that material. The camera position is also uploaded to calculate the specular reflection.
+                <br><br>
+                The LitMaterial uses a fragment shader that implements the Phong lightning model. Each light type
+                is calculated separatedly and then added together. The calculation of the value of each light is done taking into account the ambient, diffuse and specular colors of the light as well as the diffuse and specular textures of the material.
+                <br><br>
+                Due to the Phong model limitations, the max amount of lights in the scene are limited. As the cost of adding new lights escalates quickly.
+              </p>
+
+              <h4>Light halos using the geometry shader</h4>
+
+              <div class="row align-items-stretch">
+                <div class="col-md-9" >
+                  <p>When designing and implementing the lights, I wanted them to have the typical halo that
+                    you see in videogames (and in real life). To do so, I had to have a quad in the same position
+                    of the light with the texture of a halo. This quad had to be rotated each frame so that its forward vector was the opposite of the camera's forward vector. 
+                    <br><br>
+                    I could not figure out how to do this on the CPU, as it generated many problems due to the architecture of the engine we were working on. As an alternative, I researched how geometry shaders worked (as I had a vague idea of what they did) and decided to try this way.
+                    <br><br>
+                    The final solution that I implemented was that each light had a HaloMaterial with a specific vertex, geometry and fragment shader. For each light, I uploaded their position as a single vertex to the vertex shader. Then, in the geometry shader, I used that point and the forward vector of the camera (passed as a uniform) to generate a quad that faced the camera. Finally, in the fragment shader I setted the halo texture to the quad.
+                  </p>
+                </div>
+                <div class="col-md-3 ml-auto">
+                  <img src="../assets/img/manhattan_halo.gif" width="400" height="225">
+                </div>
+              </div>
+
+              <h4>Fog effect</h4>
+              <div class="row align-items-stretch">
+                <div class="col-md-9">
+                  <p>I implemented the fog effect as an attribute of the LightingManager and can be parametrized through the manager. The fog is calculated using the exponential formula for the fog. The final color of the lit fragment shader is a mix between the color of the fog and the calculated color of the fragment.
+                  </p>
+                </div>
+                <div class="col-md-3 ml-auto">
+                  <img src="../assets/img/manhattan_fog.gif" width="400" height="225">
+                </div>
+              </div>
+
+
+              <h4>Postprocessing effects</h4>
+              <p>I implemented all the postprocessing effects of the Engine, which are:
+                <ul>
+                  <li>Blur with a 5x5 gaussian kernel.</li>
+                  <li>Vignette.</li>
+                  <li>Chromatic Aberration.</li>
+                  <li>Bloom.</li>
+                </ul>
+
+                To create the postprocessing effects I used the frame buffer object of OpenGL, so the first thing I created was a class FrameBuffer that served as an abstraction to the OpenGL object.
+                This class would store the fbo id and perform all the actions related to the OpenGL object.
+                <br>
+                <br>
+                To create all the effects, I painted the scene into a FrameBuffer that contained an OpenGL RenderBuffer object and that had attached two textures to paint the frame on. One for the color of the scene and one for the depth of the scene.
+                <br>
+                <br>
+                Then I rendered a quad that occupies the whole screen and used the color texture to render the whole scene into the quad. During this pass, I applied the blur, vignette and chromatic aberration effects.
+                <br>
+                <br>
+                To apply the bloom effect, I used two textures to paint the image from one texture to the other several times, each time applying the bloom effect. The steps required to achieve this effect where:
+                <ol>
+                  <li>Bind the frame buffer with last texture used.</li>
+                  <li>Render the quad object applying the bloom shader, that performs a bloom pass, and store the render in an empty texture.</li>
+                  <li>Repeat steps 1-3 10 times.</li>
+                  <li>Render the final texture to show the final scene.</li>
+                </ol>
+              </p>
+              -->
             </div>
           </div>
-        </div>
+      </div>
     </section>
   </main><!-- End #main -->
 

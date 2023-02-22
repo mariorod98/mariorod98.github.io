@@ -104,7 +104,7 @@
         <div class="container">
           <div class="row align-items-stretch">
             <div class="col-md-7" data-aos="fade-up">
-              <img src="../assets/img/wfc.gif" width="560" height="300">
+              <img src="../assets/img//wfc/wfc.gif" width="560" height="300">
               <!-- <iframe width="560" height="300"
               src="https://www.youtube.com/embed/8bAvbA1r16U">
               </iframe> -->
@@ -135,7 +135,7 @@
             </div>
           </div>
         </div>
-<!--
+
         <div class="container">
           <div class="row mb-4 align-items-center">
             <div class="col-md-8">
@@ -144,27 +144,134 @@
               <p>
                 For this demo I wanted to explore hexagonal grids, and how can they be implemented. I decided
                 to have a grid generator as open as possible. Some of the features of this generator are:
-
               </p>
+              <ul>
+                <li>There are two ways to display an hexagon: top side flat (the 
+                  top is an edge) or top side pointy (the top is a vertex). The 
+                  generator handles both instances.</li>
+                <li>It can generate two types of grid: rectangular (with x rows 
+                  and y columns) or hexagonal (with n rings).</li>
+                <li>The grid is composed of a series of Nodes that are linked 
+                  to each others via Paths.</li>
+                <li>The nodes are stored in a List, but traversing the list is 
+                  not supported. The only way to traverse between Nodes is through
+                  their paths.</li>
+              </ul>
+
+              <div class="row align-items-stretch">
+                <div class="col-md-8" >
+                  <img src="../assets/img/wfc/hex_grid.png" width="350" height="350">
+                  <p>Hexagonal grid formation</p>
+                </div>
+                <div class="col-md-4 ml-auto">
+                  <img src="../assets/img/wfc/squared_grid.png" width="350" height="350">
+                  <p>Rectangular grid formation</p>
+                </div>
+              </div>
+              <br>
+              <p>
+                As for the Node, it contains its position, a list of all the paths
+                it shares with other Nodes and a reference to the tile (the 
+                actual GameObject) it holds. On the other hand, a Path is a 
+                connection between an in_node (the Node it belongs to),
+                an out_node (the neighbouring Node) and a cost (for pathfinding 
+                purposes).
+                <br><br>
+                This implementation works as it is but, in its current state, it
+                is not very efficient. For instance, for each two adjacent Nodes,
+                there are two different Paths, from one Node to the other and
+                viceversa. This can be reducted two one Path and, when traversing,
+                take into consideration the current node you are in. Another possible
+                optimization could be to remove the Paths alltogether and use an
+                adjacency matrix with the cost to move from one node to others.
+              </p>
+
               <h4>Procedural generation of the world using the Wave Function Collapse Algorithm.</h4>
               <p>
-                The <a href="https://github.com/mxgmn/WaveFunctionCollapse" target="_blank">Wave Function Collapse</a> algorithm
-                is a generative algorithm that is bases on the restrictions between adjacent pixels/tiles. It has been widely used
-                to generate 2D images, tilemaps and even 3D models.
+                The <a href="https://github.com/mxgmn/WaveFunctionCollapse" target="_blank">Wave Function Collapse</a> 
+                algorithm is a generative algorithm that is bases on the restrictions 
+                between adjacent pixels/tiles. It has been widely used to generate 
+                2D images, tilemaps and even 3D models.
                 <br><br>
-                My implementation of the algorithm is a mix of all the sources I found when researching about the algorithm adapted
-                to the hexagonal grid that I am using and the overall idea of the world I want to generate.
+                My implementation of the algorithm is a mix of all the sources I 
+                found when researching about the algorithm adapted to the hexagonal 
+                grid that I am using and the overall idea of the world I want to 
+                generate.
                 <br><br>
-
+                The first iteration of the algorithm that I implemented had as input:
+                <ul>
+                  <li>A list of the modules that could be placed in each tile.</li>
+                  <li>A list of adjacency rules that dictaminated which module 
+                    could be placed next to which module.
+                  </li>
+                  <li>A list with the weights of the modules. The bigger the weight,
+                    the more probable a module is of being picked.
+                  </li>
+                </ul>
+                This implementation was functional, but it was not escalable at all.
+                For each module I added, I had to add all the adjacency rules between
+                that module and the rest of the modules. With each module added, the 
+                task became increasingly tiresome.
+                <br><br>
+                On the second iteration, I discarded the adjacency rules list entirely.
+                Instead, I defined an enum of the types of elements that populated
+                the map (grass, forest, mountains, cities, water, path, etc.) And,
+                for each edge of the module, defined a list of compatible types 
+                that could be placed next to that edge. For example, a forest edge
+                can only be placed next to a forest edge, but a hill edge can be
+                placed either next to a grass, a hill or a mountain edge.
+                <br><br>
+                With this implementation, I do not have to define the behaviour
+                of each module with the rest of the modules. Now I just have to
+                define, for each side of the new module, the compatible types. Making
+                the task much more easy. Moreover, this change resulted in a huge
+                optimization for the algorithm, as now I didn't have to search in
+                the rules list for all the rules related to the tile.
               </p>
+
               <h4>Road generation using A*.</h4>
               <p>
-
+                I want the cities generated to be connected between each others
+                as naturally as possible. At first, I tried to generate the 
+                roads with the WFC algorithm, however, this added so much
+                complexity to the algorithm that the number of viable solutions
+                dropped significantly. Moreover, the roads generated were not
+                very natural, nor optimal.
+                <br><br>
+                Therefore, I decided to use an A* pathfinding algorithm to
+                generate the roads between the cities. It is now in its first
+                iteration and, for now, it only generates the optimal path
+                between every city. This aproximation, even if it achieves the
+                goal, does not take into account pre-existing roads. So you can
+                find in a situation where two roads are parallel for a great
+                distance to the same city, when they could have been merged.
+                <br><br>
+                I am currently working in a variation of the algorithm to resolve
+                this issue. I am testing some of these options when generating
+                a road from one city to another:
+                <ul>
+                  <li>Give priority to tiles that have already a path in it 
+                    (lowering their cost for example).
+                  </li>
+                  <li>For each node explored, check all the neighbouring nodes and
+                    if any is part of a road, check if the road leads to the target
+                    city. If this is the case, merge with the road and end the search.
+                  </li>
+                  <li>For each node explored, check all the neighbouring nodes and,
+                    if any node is a city, check if the city has already a road
+                    to the target city. If this is the case, lead the road to that
+                    city and end the search.
+                  </li>
+                </ul>
               </p>
+
+              <img src="../assets/img/wfc/pathfinding.gif" width="550" height="320">
+              <p>Current implementation of the pathfinder.</p>
+
             </div>
           </div>
         </div>
-        -->
+
       </div>
     </section>
   </main><!-- End #main -->

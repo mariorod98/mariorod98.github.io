@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Mario Rodríguez Portfolio - Teseo Bros</title>
+  <title>Mario Rodríguez Portfolio - GVGAI</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -91,12 +91,14 @@
 
     <section class="section">
       <div class="container">
-        <div class="row mb-4 align-items-center">
+        <div class="row mb-0 align-items-center">
           <div class="col-md-6" data-aos="fade-up">
-            <h2>Teseo Bros.</h2>
-            <p class="mb-0"><span class="text-muted">Unreal Engine 4, AI, Multiplayer</span></p>
-            <p class="mb-4"><span class="text-muted">September, 2022 - In development</span></p>
-            <p>A multiplayer game where you must escape from the minotaur's labyrinth.</p>
+            <h2>Reactive-Deliberative Agent.</h2>
+            <p class="mb-0"><span class="text-muted">Java, AI, Problem Solving</span></p>
+            <p class="mb-4"><span class="text-muted">February, 2019 - April, 2019</span></p>
+            <p>An agent based in heuristic searchs that has to beat up as much
+              leves as possible from the GVGAI game demo.
+            </p>
           </div>
         </div>
       </div>
@@ -105,7 +107,11 @@
         <div class="container">
           <div class="row align-items-stretch">
             <div class="col-md-7" data-aos="fade-up">
-              <img src="../assets/img/teseo_bros_index.gif">
+              <img class="mb-4" src="../assets/img/gvgai/gvgai0.gif" width="560" height="300">
+              <img class="mb-4" src="../assets/img/gvgai/gvgai1.gif" width="560" height="300">
+              <img class="mb-4" src="../assets/img/gvgai/gvgai3.gif" width="560" height="300">
+              <img class="mb-4" src="../assets/img/gvgai/gvgai4.gif" width="560" height="300">
+
               <!-- <iframe width="560" height="300"
               src="https://www.youtube.com/embed/8bAvbA1r16U">
               </iframe> -->
@@ -113,40 +119,83 @@
             <div class="col-md-5 ml-auto" data-aos="fade-up">
               <div class="sticky-content">
                 <div class="mb-5">
-                  <p>Teseo Bros is a multiplayer game developed in Unreal Engine 4 where two brothers,
-                    Teseo and Leseo, must escape the labyrinth they are trapped in while fighting rats
-                    and the mighty minotuar. This game was developed along with my colleage 
-                    <a href="https://www.linkedin.com/in/carmen-martin-moreno" target="_blank">Carmen Martín Moreno</a>.
+                  <p>The General Video Games Artificial Intelligence (GVGAI) is 
+                    competition where a single AI agent must beat any game given.
+                    In this case, I developed, along with 
+                    <a href="https://www.linkedin.com/in/carmen-martin-moreno" target="_blank">Carmen Martín Moreno</a>,
+                    an agent able to beat the demo game <i>Boulder Chase</i>. In
+                    this game, the character must collect, at least, ten gems and 
+                    end the level reaching the exit. The level is full of enemies
+                    that can kill you and boulders that, if digged under them, will 
+                    crush you.
+                  </p>
+
+                  <h2>Agent behaviour</h2>
+                  <p>
+                    We decided to make a reactive-deliberative agent that would
+                    trace a plan to obtain the 10 most reachable gems and, when
+                    performing the plan, would react based on the enemies and 
+                    boulders that surrounded the agent.
+                  </p>
+
+                  <h4>Deliberative behaviour</h4>
+                  <p>
+                    When spawning the agent, the first thing it does is divide
+                    the level into six zones of equal sizes (the levels are always
+                    rectangular). Then it gives a heuristic to each zone calculated
+                    from:
+
+                    <ul class="list-unstyled list-line">
+                      <li>The number of gems in the zone.</li>
+                      <li>The distance from the player to the zone.</li>
+                      <li>The distance from the portal to the zone.</li>
+                      <li>The number of enemies in the zone.</li>
+                      <li>The difficulty of each zone between the agent and This
+                        zone (to avoid visiting great zones that can only be 
+                        accessed through really hostile zones).
+                      </li>
+                    </ul>
+
+                    After calculating the heuristic of each zone, the agent selects
+                    the best zone and launches an A* pathfinding search to the gems
+                    of the best zone. This pathfinding algorithm does not take into
+                    account if there is an enemy or boulder in the way. 
+                    
+                    <br><br>
+                    The resulting output from the algorithm is a list of actions 
+                    that have to be performed to reach its destination (either 
+                    move in a direction, stay put or dig in a direction).
+                  </p>
+
+                  <h4>Reactive behaviour</h4>
+                  <p>
+                    Once the agent has determined the path to obtain the gems,
+                    it starts moving towards that objective. Before performing
+                    the next action, the reactive behaviour is launched to assess
+                    its surroundings. If any obstacle is found, it reconsiders its
+                    actions for the next moves. In other words, the reactive 
+                    behaviour of the agent is designed to help it overcome critical
+                    situations.
+                    <br><br>
+                    For example, if it has to move under a rock, the rock will
+                    fall and kill the agent. Therefore, the agent studies what 
+                    possible alternatives are there. It can dig in that direction,
+                    let the rock fall and move above the rock. But if that path is
+                    blocked, then it has to find another solution. Maybe it go under
+                    the supposed path, avoiding the rock.
+                    <br><br>
+                    If the actions of the agent, or another entity, have disrupted
+                    the agent's plans, it will relaunch the A* search to trace a
+                    new viable plan to the target gem. If no viable plan is obtained,
+                    then it will select the next gem in the zone or the next zone
+                    to explore.
                   </p>
                 </div>
-
-                <h4 class="h4 mb-3">What I did</h4>
-                <ul class="list-unstyled list-line mb-5">
-                  <li>The minotaur's artificial intelligence using Behaviour Trees.</li>
-                  <li>The stimuli system so that the AI can see and hear the player.</li>
-                  <li>The character Teseo.</li>
-                  <li>Core game loop.</li>
-                </ul>
               </div>
             </div>
           </div>
         </div>
-
-        <div class="container">
-          <div class="row mb-4 align-items-center">
-            <div class="col-md-8" data-aos="fade-up">
-              <h2>Features</h2>
-              <ul class="list-unstyled list-line mb-5">
-              <li>Two distinct characters each with their own unique abilities.</li>
-              <li>Online multiplayer with lobby.</li>
-              <li>Full animations and sound.</li>
-              <li>Full core game loop with win/lose state and main and pause menu.</li>
-              <li>Interactable objects such as pickups, levers, doors and pressure plates.</li>
-              <li>Enemies with complex AI behaviour that is able to see and hear you.</li>
-              </ul>
-            </div>
-          </div>
-        </div>
+      </div>
     </section>
   </main><!-- End #main -->
 

@@ -97,7 +97,7 @@
             <p class="mb-0"><span class="text-muted">Unreal Engine 4</span></p>
             <p class="mb-4"><span class="text-muted">September, 2022 - In development</span></p>
 
-            <p>2.5D platformer with a strong focus on combat and a dark atmosphere. (Work in progress)</p>
+            <p>2.5D platformer with a strong focus on combat and a dark atmosphere built in Unreal Engine 4. (Work in progress)</p>
           </div>
         </div>
       </div>
@@ -106,7 +106,11 @@
         <div class="container">
           <div class="row align-items-stretch">
             <div class="col-md-7" data-aos="fade-up">
-              <img src="../assets/img/minotaur.gif">
+              <img src="../assets/img/born_to_rise/feel.gif" width="640" height="360">
+              <p>First prototype of the game's background.</p>
+
+              <img src="../assets/img/born_to_rise/gameplay1.gif" width="640" height="360">
+              <p>Current iteration of the gameplay.</p>
               <!-- <iframe width="560" height="300"
               src="https://www.youtube.com/embed/8bAvbA1r16U">
               </iframe> -->
@@ -114,31 +118,93 @@
             <div class="col-md-5 ml-auto" data-aos="fade-up">
               <div class="sticky-content">
                 <div class="mb-5">
-                  <p>This is the final project of my HND in Videogames Programming at ESAT.
-                    It is a 2.5D platformer 
-                  </p>
-                </div>
+                  <p>
+                    This is the final project of my HND in Videogames Programming
+                    at ESAT. It is a 2.5D platformer that is being developed by 
+                    a multidisciplinary team of 7 programmers, 6 artists and 3
+                    game designers. You can follow the game progress at
+                    <a href="https://twitter.com/BornToRiseGame">@BornToRiseGame</a>.
+                    <br><br>
+                    This project tries to be a very close approximation of how 
+                    a video games studio works. We have tight schedules with
+                    deadlines and milestones such as prototype and first playable.
+                    We work under an adaptation of the scrum methodology where we 
+                    have weekly sprints. Each sprint begins and ends with a meeting
+                    where we assess the progress of each department and how well
+                    are we reaching our objectives.
+                    <br><br>
+                    The most important aspect of this project is the communication
+                    both between peers of your own team and between teams. Constant
+                    communication with our fellow designers and artist is key
+                    to have a smooth development and to better iterate on the
+                    game.
+                    <br><br>
 
-                <h4 class="h4 mb-3">What I did</h4>
-                <ul class="list-unstyled list-line mb-5">
-                  <li>The player's combat system: melee attack, bullet spray, normal and heavy attacks.</li>
-                  <li>DashComponent for the player.</li>
-                  <li>A platform that destroys itself when the player steps on it.</li>
-                  <li>Bullet pool subsystem used by all the Actors in the game that shoot bullets.</li>
-                  <li>A HealthComponent used by all the Characters to manage their health.</li>
-                  <li>Damageable and Knockbackable interfaces used by all the Characters when damaged or knockbacked.</li>
-                  <li>HUD class and Widgets for the PauseMenu and for the HUD display.</li>
-                  <li>Gameloop (player death, level restart, level end...) and checkpoint system.</li>
-                </ul>
+                    <b>
+                    The repository of this project is private but code snippets may be
+                    given to anyone interested in its implementation.
+                    <a href="../contact.html">Contact me</a> for more information.</b>
+                  </p>
+
+                  <h4 class="h4 mb-3">Features</h4>
+                  <ul class="list-unstyled list-line mb-5">
+                    <li>Fully fleshed platformer designed from scratch and soon to be released on Steam.</li>
+                    <li>Three levels divided into multiple rooms to test the player's abilities in combat and platforming.</li>
+                    <li>Multiple enemies, each with their unique theme, concept and behaviour.</li>
+                  </ul>
+                </div>
               </div>
             </div>
           </div>
         </div>
 
+
         <div class="container">
           <div class="row mb-4 align-items-center">
             <div class="col-md-8" data-aos="fade-up">
-              <h2>Features</h2>
+              <h2>What I did</h2>
+        <!--
+              <div class="row align-items-stretch">
+                <div class="col-md-9" >
+                  <h4>The dash ability of the player.</h4>
+                  <p>
+                    The dash is an Actor Component that provides the Actor with
+                    a dash. It can be added to any actor that needs a dash ability.
+                    The dash launches the actor in a given direction, removing the
+                    gravity force for the duration of the dash. It also grants 
+                    invulnerability for a period of time. So it can be used to dash
+                    enemies, bullets or hazards. It also has a cooldown to avoid
+                    spamming the dash. This cooldown is reseted after a period of
+                    time or if the Actor hits a wall, platform or the ground.
+                  </p>
+                </div>
+                <div class="col-md-3 ml-auto">
+                  <img src="../assets/img/born_to_rise/dash1.gif" width="400" height="225">
+                </div>
+              </div>
+
+              <div class="row align-items-stretch">
+                <div class="col-md-9" >
+                  <h4>Player's melee and distance attacks</h4>
+                  <p>
+                  </p>
+                </div>
+                <div class="col-md-3 ml-auto">
+                  <img src="../assets/img/born_to_rise/dash1.gif" width="400" height="225">
+                </div>
+              </div>
+-->
+              <ul class="list-unstyled list-line mb-5">
+                <li>Part of the player's combat system: melee attack and bullet spray.</li>
+                <li>The dash ability of the player.</li>
+                <li>A platform that destroys itself when the player steps on it.</li>
+                <li>Bullet pool subsystem used by all the Actors in the game that shoot bullets.</li>
+                <li>A HealthComponent used by all the Actors to manage their health.</li>
+                <li>Damageable and Knockbackable interfaces used by all the Characters when damaged or knockbacked.</li>
+                <li>The knockback system for the player and enemies.</li>
+                <li>HUD class and Widgets for the Pause Menu and for the in game HUD.</li>
+                <li>Gameloop (player death, level restart, level end...) and checkpoint system.</li>
+              </ul>
             </div>
           </div>
         </div>

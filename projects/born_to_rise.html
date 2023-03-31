@@ -145,28 +145,79 @@
                     given to anyone interested in its implementation.
                     <a href="../contact.html">Contact me</a> for more information.</b>
                   </p>
-
+                  
+                  <!--
                   <h4 class="h4 mb-3">Features</h4>
                   <ul class="list-unstyled list-line mb-5">
                     <li>Fully fleshed platformer designed from scratch and soon to be released on Steam.</li>
                     <li>Three levels divided into multiple rooms to test the player's abilities in combat and platforming.</li>
                     <li>Multiple enemies, each with their unique theme, concept and behaviour.</li>
                   </ul>
+                  -->
+
                 </div>
               </div>
             </div>
           </div>
         </div>
 
+        <br><br>
 
         <div class="container">
           <div class="row mb-4 align-items-center">
             <div class="col-md-8" data-aos="fade-up">
               <h2>What I did</h2>
-        <!--
               <div class="row align-items-stretch">
                 <div class="col-md-9" >
-                  <h4>The dash ability of the player.</h4>
+                  <h4>Combat system and player mechanics.</h4>
+                  <p>
+                    I was one of the people in charge of creating the player combat
+                    actions, which were: melee attack that knock enemies back, main
+                    range attack that fires a spray of bullets and secondary range
+                    attack that fires a powerfull wave that deals heavy damage and
+                    passes through enemies.
+                    <!--
+                    <br><br>
+                    Both the melee and range attacks are their own Components 
+                    (MeleeComponent and ShooterComponent). The ShooterComponent
+                    is general to all actors, player and enemies. It gives the
+                    Actor the ability to shoot one kind of bullet with a custom
+                    rate of fire.
+                    <br><br>
+                    The player uses the PlayerShooterComponent, that inherits from
+                    the ShooterComponent, to expand the functionality of the parent
+                    component to add the secondary attack as well as ammo capacity
+                    that limits how many bullets the player can fire. The component
+                    reloads bullets at a given rate and, if deplenished, enters
+                    an overload state, stopping the reload for some seconds.
+                    reload of bullets-
+                    -->
+                    <br><br>
+                    I was also in charge of the HealthComponent that the player and
+                    the enemies shared. This ActorComponent tracks the health of
+                    the Actor and handles the Actor death and reviving through
+                    delegates. Along with the HealthComponent, I implemented an
+                    interface to be used for all the Actors that could be damaged,
+                    called IDamageable, so that taking damage could be abstracted
+                    from the actor and handled directly with the HealthComponent.
+                    <br><br>
+                    Another feature involved with the combat system was the knockback
+                    and hit stop of the player and enemies. Whenever the player is hit
+                    or when the player attacks an enemy with the melee attack, the damaged
+                    Actor is knocked back and both actors are stopped for some frames
+                    to give more impact to the action.
+                  </p>
+                </div>
+                <div class="col-md-3 ml-auto">
+                  <img src="../assets/img/born_to_rise/gameplay2.gif" width="400" height="225">
+                </div>
+              </div>
+
+              <br><br>
+
+              <div class="row align-items-stretch">
+                <div class="col-md-9" >
+                  <h4>Dash ability of the player.</h4>
                   <p>
                     The dash is an Actor Component that provides the Actor with
                     a dash. It can be added to any actor that needs a dash ability.
@@ -183,25 +234,51 @@
                 </div>
               </div>
 
+              <br><br>
+
               <div class="row align-items-stretch">
                 <div class="col-md-9" >
-                  <h4>Player's melee and distance attacks</h4>
+                  <h4>Breakable platforms.</h4>
                   <p>
+                    This platforms break on contact if you step over them. When 
+                    a hit is registered in the platform, a timer is set to display
+                    the <i>OpenPlatform</i> animation. In this animation, an
+                    AnimNotify event is dispatched to remove the collision of the
+                    platform and to begin another timer for the cooldown before
+                    it restores its natural state. Then the <i>ClosePlatform</i>
+                    animation is played, with another AnimNotify that restores the
+                    platform collisions, returning to its initial state.
                   </p>
                 </div>
                 <div class="col-md-3 ml-auto">
-                  <img src="../assets/img/born_to_rise/dash1.gif" width="400" height="225">
+                  <img src="../assets/img/born_to_rise/destructible_platform.gif" width="400" height="225">
                 </div>
               </div>
--->
+
+              <br><br>
+
+              <div class="row align-items-stretch">
+                <div class="col-md-9" >
+                  <h4>Spline meshes.</h4>
+                  <p>
+                    I created a blueprint that constructed a spline mesh with
+                    static meshes for the designers and artists to use. You can 
+                    specify if the spline has collision or not and specify which
+                    type of meshes to use for the initial and final sections as well
+                    as the mid sections. You can add more than one type for each
+                    section and the spline mesh will select a random static mesh
+                    from the sample given.
+                  </p>
+                </div>
+                <div class="col-md-3 ml-auto">
+                  <img src="../assets/img/born_to_rise/spline_mesh.gif" width="400" height="225">
+                </div>
+              </div>
+
+              <br><br>
+              <h4>Other features.</h4>
               <ul class="list-unstyled list-line mb-5">
-                <li>Part of the player's combat system: melee attack and bullet spray.</li>
-                <li>The dash ability of the player.</li>
-                <li>A platform that destroys itself when the player steps on it.</li>
                 <li>Bullet pool subsystem used by all the Actors in the game that shoot bullets.</li>
-                <li>A HealthComponent used by all the Actors to manage their health.</li>
-                <li>Damageable and Knockbackable interfaces used by all the Characters when damaged or knockbacked.</li>
-                <li>The knockback system for the player and enemies.</li>
                 <li>HUD class and Widgets for the Pause Menu and for the in game HUD.</li>
                 <li>Gameloop (player death, level restart, level end...) and checkpoint system.</li>
               </ul>

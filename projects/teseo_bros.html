@@ -148,6 +148,45 @@
               <li>Interactable objects such as pickups, levers, doors and pressure plates.</li>
               <li>Enemies with complex AI behaviour that is able to see and hear you.</li>
               </ul>
+
+              <h2>How I did it</h2>
+              <h4>Minotaur's Behaviour</h4>
+              <p>The minotaur has a series of behaviours that depend on the stimuli it receives
+                from the player. The three behaviours are:
+                <ul class="list-unstyled list-line mb-5">
+                  <li>The minotaur patrols the labyrinth following a series of points. The route it follows
+                    dependes on the doors that are open and close. There are three doors in the level that
+                    connect the two parts of the labyrinth and the minotaur will calculate one patrol route
+                    or another depending on the state of each door.
+                  </li>
+                  <li>If the minotaur hears or loses sight of the player, it will start an investigation
+                    in the point where the stimulus was received. It will rush to the stimulus location
+                    and then select three random points in the vicinity to investigate.
+                  </li>
+                  <li>Whenever the minotaur sees the player, it will enter attack mode and rush to the player
+                    to be in melee range. If the minotaur is close enough, it will perform one of its three
+                    attacks depending on the relative position of the player. If it is not close enough, it will
+                    keep charging into the player.
+                  </li>
+                </ul> 
+                To implement this behaviour I used the Behaviour Tree and Perception System that Unreal Engine 4
+                implements. The Perception System is used by the AIController to receive sight and hearing stimuli
+                from the player. Whenever a stimulus is received, the controller determines the sense of the stimulus
+                and if it is a new stimulus or not. It then updates the minotaur's Blackboard, which stores all the
+                information needed in the Behaviour Tree.
+                <br><br>
+                The Behaviour Tree has three main branches, one for each behaviour: patrolling, investigating and attacking.
+                The attack branch is the first in the tree (therefore it is the one with the most priority) and is activated
+                whenever the minotaur sees the player. In this branch, the minotaur will first run into the player and then attack them.
+                <br><br>
+                The second branch is the investigation branch. It is activated when the minotaur loses sight of the player or when
+                it hears the player somewhere. The minotaur will then rush to the location of the stimulus and launch an investigation
+                to three points near that stimulus. These points are obtained using the Environment Query System (EQS) of Unreal.
+                <br><br>
+                Finally, the last branch of the behaviour tree is the patrolling branch. This branch does not have any condition to be
+                activated, as it is the default behaviour of the minotaur. In this branch, the minotaurs first selects the next patrol point
+                in its route and then moves to that point.
+              </p>
             </div>
           </div>
         </div>
